@@ -23,7 +23,7 @@ public class TebakAbjad {
 
     // validasi tebakan
 
-    private boolean validateTebakan(char tebakan) {
+    private boolean validasiTebakan(char tebakan) {
         tebakan = Character.toLowerCase(tebakan);
         return tebakan >= 'a' && tebakan <= 'z';
     }
@@ -59,7 +59,7 @@ public class TebakAbjad {
             return "Permainan sudah selesai.";
         }
 
-        if (!validateTebakan(tebakan)) {
+        if (!validasiTebakan(tebakan)) {
             return "Tebakan harus berupa huruf.";
         }
 
