@@ -2,6 +2,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class mainmenu {
+    private static final Skor SKOR = new Skor();
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int pilihan;
@@ -85,15 +87,13 @@ public class mainmenu {
 
             if (game.isMenang()) {
                 System.out.println("\nSelamat! Anda menang.\n");
-                //masi temp
-                System.out.println("temp skor");
+                simpanSkorAngka(in, batasPercobaan, game.getJumlahPercobaan());
                 break;
             }
 
             if (game.isGameSelesai()) {
                 System.out.println("\nPercobaan habis. Anda kalah.\n");
-                //masih temp juga
-                System.out.println("temp skor");
+                simpanSkorAngka(in, batasPercobaan, game.getJumlahPercobaan());
                 break;
             }
         }
@@ -122,8 +122,7 @@ public class mainmenu {
 
             if (game.isGameSelesai()) {
                 System.out.println("\nPermainan selesai.\n");
-                //ini juga, msi temp
-                System.out.println("temp skor");
+                simpanSkorAbjad(in, batasPercobaan, game.getJumlahPercobaan());
                 break;
             }
         }
@@ -141,11 +140,41 @@ public class mainmenu {
 
         if (pilihan == 1) {
             System.out.println("\n=== LEADERBOARD TEBAK ANGKA ===");
+            SKOR.tampilkanLeaderboardAngka();
 
         } else if (pilihan == 2) {
             System.out.println("\n=== LEADERBOARD TEBAK ABJAD ===");
+            SKOR.tampilkanLeaderboardAbjad();
 
         }
+    }
+
+    private static void simpanSkorAngka(Scanner in, int batasPercobaan, int jumlahPercobaan) {
+        String nama = inputNamaPemain(in, "Tebak Angka");
+        int skor = Math.max(0, Skor.hitungSkor(batasPercobaan, jumlahPercobaan));
+        SKOR.tambahSkorAngka(nama, skor);
+        System.out.println("Skor Anda: " + skor);
+        SKOR.tampilkanLeaderboardAngka();
+    }
+
+    private static void simpanSkorAbjad(Scanner in, int batasPercobaan, int jumlahPercobaan) {
+        String nama = inputNamaPemain(in, "Tebak Abjad");
+        int skor = Math.max(0, Skor.hitungSkor(batasPercobaan, jumlahPercobaan));
+        SKOR.tambahSkorAbjad(nama, skor);
+        System.out.println("Skor Anda: " + skor);
+        SKOR.tampilkanLeaderboardAbjad();
+    }
+
+    private static String inputNamaPemain(Scanner in, String namaGame) {
+        System.out.print("Masukkan nama pemain untuk " + namaGame + ": ");
+        in.nextLine();
+        String nama = in.nextLine().trim();
+
+        if (nama.isEmpty()) {
+            nama = "Pemain";
+        }
+
+        return nama;
     }
 
     private static void opsiKembaliKeMenuUtama(Scanner in) {

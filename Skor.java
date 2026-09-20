@@ -14,7 +14,8 @@ public class Skor {
 
     // STATIC METHOD, calculates score based on number of attempts and max attempts
     public static int hitungSkor(int batasPercobaan, int jumlahPercobaan) {
-        int final maxSkor = 2500;
+        //final sebelum int
+        final int maxSkor = 2500;
         int deduct = 0;
         switch (batasPercobaan) {
             case 3: deduct = 100; break;
