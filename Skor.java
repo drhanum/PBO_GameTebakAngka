@@ -13,8 +13,16 @@ public class Skor {
     }
 
     // STATIC METHOD, calculates score based on number of attempts and max attempts
-    public static int hitungSkor(int jumlahPercobaan, int batasPercobaan) {
-        return (batasPercobaan - jumlahPercobaan + 1) * 10; // skor = (batas percobaan - jumlah percobaan + 1) * 10
+    public static int hitungSkor(int batasPercobaan, int jumlahPercobaan) {
+        int final maxSkor = 2500;
+        int deduct = 0;
+        switch (batasPercobaan) {
+            case 3: deduct = 100; break;
+            case 5: deduct = 200; break;
+            case 7: deduct = 300; break;
+            default: throw new IllegalArgumentException("Batas percobaan harus 3, 5, atau 7.");
+        }
+        return maxSkor - (deduct * (jumlahPercobaan));
     }
 
     // STATIC HELPER METHOD, adds a string to a String array
