@@ -5,22 +5,21 @@ public class mainmenu {
     private static final Skor SKOR = new Skor();
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int pilihan;
-
-        do {
-            tampilkanMenuUtama();
-            pilihan = pilihMenu(in, 1, 4);
-
-            switch (pilihan) {
-                case 1 -> mainTebakAngka(in);
-                case 2 -> mainTebakAbjad(in);
-                case 3 -> menuSkor(in);
-                case 4 -> System.out.println("\nTerima kasih telah bermain!\n");
-            }
-        } while (pilihan != 4);
-
-        in.close();
+        try (Scanner in = new Scanner(System.in)) {
+            int pilihan;
+            
+            do {
+                tampilkanMenuUtama();
+                pilihan = pilihMenu(in, 1, 4);
+                
+                switch (pilihan) {
+                    case 1 -> mainTebakAngka(in);
+                    case 2 -> mainTebakAbjad(in);
+                    case 3 -> menuSkor(in);
+                    case 4 -> System.out.println("\nTerima kasih telah bermain!\n");
+                }
+            } while (pilihan != 4);
+        }
     }
 
     private static int pilihMenu(Scanner in, int batasBawah, int batasAtas) {
@@ -87,13 +86,13 @@ public class mainmenu {
 
             if (game.isMenang()) {
                 System.out.println("\nSelamat! Anda menang.\n");
-                simpanSkorAngka(in, batasPercobaan, game.getJumlahPercobaan());
+                simpanSkorAngka(in, batasPercobaan, game.getJumlahPercobaan(), game.isMenang());
                 break;
             }
 
             if (game.isGameSelesai()) {
                 System.out.println("\nPercobaan habis. Anda kalah.\n");
-                simpanSkorAngka(in, batasPercobaan, game.getJumlahPercobaan());
+                simpanSkorAngka(in, batasPercobaan, game.getJumlahPercobaan(), game.isMenang());
                 break;
             }
         }
@@ -122,7 +121,7 @@ public class mainmenu {
 
             if (game.isGameSelesai()) {
                 System.out.println("\nPermainan selesai.\n");
-                simpanSkorAbjad(in, batasPercobaan, game.getJumlahPercobaan());
+                simpanSkorAbjad(in, batasPercobaan, game.getJumlahPercobaan(), game.isGameSelesai());
                 break;
             }
         }
@@ -149,17 +148,17 @@ public class mainmenu {
         }
     }
 
-    private static void simpanSkorAngka(Scanner in, int batasPercobaan, int jumlahPercobaan) {
+    private static void simpanSkorAngka(Scanner in, int batasPercobaan, int jumlahPercobaan, boolean menang) {
         String nama = inputNamaPemain(in, "Tebak Angka");
-        int skor = Math.max(0, Skor.hitungSkor(batasPercobaan, jumlahPercobaan));
+        int skor = Math.max(0, Skor.hitungSkor(batasPercobaan, jumlahPercobaan, menang));
         SKOR.tambahSkorAngka(nama, skor);
         System.out.println("Skor Anda: " + skor);
         SKOR.tampilkanLeaderboardAngka();
     }
 
-    private static void simpanSkorAbjad(Scanner in, int batasPercobaan, int jumlahPercobaan) {
+    private static void simpanSkorAbjad(Scanner in, int batasPercobaan, int jumlahPercobaan, boolean menang) { 
         String nama = inputNamaPemain(in, "Tebak Abjad");
-        int skor = Math.max(0, Skor.hitungSkor(batasPercobaan, jumlahPercobaan));
+        int skor = Math.max(0, Skor.hitungSkor(batasPercobaan, jumlahPercobaan, menang));
         SKOR.tambahSkorAbjad(nama, skor);
         System.out.println("Skor Anda: " + skor);
         SKOR.tampilkanLeaderboardAbjad();
