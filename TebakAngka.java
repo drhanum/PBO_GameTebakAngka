@@ -43,6 +43,12 @@ public class TebakAngka {
         }
     }
 
+    // Setter
+    public void setBatasPercobaan(int batasPercobaan) {
+        validasiBatasPercobaan(batasPercobaan);
+        this.batasPercobaan = batasPercobaan;
+    }
+
     // Validasi tebakan
     public boolean validasiTebakan(int tebakan) {
         return tebakan >= batasBawah &&
@@ -69,12 +75,6 @@ public class TebakAngka {
 
     public boolean isMenang() {
         return menang;
-    }
-
-    // Setter
-    public void setBatasPercobaan(int batasPercobaan) {
-        validasiBatasPercobaan(batasPercobaan);
-        this.batasPercobaan = batasPercobaan;
     }
 
     // Inti game
