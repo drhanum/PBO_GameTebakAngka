@@ -4,11 +4,13 @@ public class TebakAbjad {
     private char abjadRahasia;
     private int batasPercobaan;
     private int jumlahPercobaan;
+    private boolean menang;
 
 
     //inisialisasi
     public TebakAbjad(int batasPercobaan) {
         this.jumlahPercobaan = 0;
+        this.menang = false;
         if (!batasPercobaanValid(batasPercobaan)) {
             throw new IllegalArgumentException("Batas percobaan harus 3, 5, atau 7.");
         }
@@ -20,6 +22,7 @@ public class TebakAbjad {
         Random random = new Random();
         abjadRahasia = (char) (random.nextInt(26) + 'a');
     }
+
 
     // validasi tebakan
 
@@ -67,6 +70,7 @@ public class TebakAbjad {
         tebakan = Character.toLowerCase(tebakan);
 
         if (tebakan == abjadRahasia) {
+            menang = true;
             return "Selamat! Tebakan Anda benar.";
         } else if (jumlahPercobaan >= batasPercobaan) {
             return "Maaf, Anda telah kehabisan percobaan. Abjad rahasia adalah: " + abjadRahasia;
@@ -76,7 +80,7 @@ public class TebakAbjad {
     }
 
     public boolean isGameSelesai() {
-        return jumlahPercobaan >= batasPercobaan;
+        return menang || jumlahPercobaan >= batasPercobaan;
     }
 
 }
